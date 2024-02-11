@@ -8,7 +8,6 @@ from langchain.chains import LLMChain
 from langchain import OpenAI
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
-from audio_recorder_streamlit import audio_recorder
 
 
 def create_users_db():
@@ -209,29 +208,11 @@ def main():
         with create_tab:
             uploaded_file = st.file_uploader("Učitaj snimku", type=['mp3', 'mp4', 'mpeg', 'mpga', 
                                                                         'm4a', 'wav', 'webm'])
-            upload_dir = 'uploads'
-            os.makedirs(upload_dir, exist_ok=True)
-            upload_mode = st.radio("Upload Mode", options=['File Upload', 'Voice Record'])
-            if upload_mode == 'File Upload':
-                uploaded_file = st.file_uploader("Upload Audio File", type=['mp3', 'mp4', 'mpeg', 'mpga', 
-                                                                            'm4a', 'wav', 'webm'])
-                if uploaded_file is not None:
-                    audio_bytes = uploaded_file.read()
-                    st.audio(audio_bytes, format="audio/wav")
-
-            if upload_mode == 'Voice Record':
-                audio_bytes = audio_recorder()
-                if audio_bytes:
-                    file_path = os.path.join(upload_dir, 'audio_record.wav')
-                    with open(file_path, 'wb') as fp:
-                        fp.write(audio_bytes)
-                    st.audio(audio_bytes, format="audio/wav")
-                    uploaded_file = file_path
-
+            
             if st.button("Generiraj transkript") and uploaded_file:
                 with st.spinner('Processing...'):
-                    #upload_dir = 'uploads'
-                    #os.makedirs(upload_dir, exist_ok=True)
+                    upload_dir = 'uploads'
+                    os.makedirs(upload_dir, exist_ok=True)
                     file_path = os.path.join(upload_dir, uploaded_file.name)
                     with open(file_path, 'wb') as f:
                         f.write(uploaded_file.getbuffer())
