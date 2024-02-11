@@ -230,7 +230,7 @@ def main():
                         f.write(uploaded_file.getbuffer())
                     st.session_state.audio_file_path = file_path
                     with open(st.session_state.audio_file_path, 'rb') as audio_file:
-                        st.session_state.transcript = openai.Audio.transcribe("whisper-1", audio_file, language = 'hr')['text']
+                        st.session_state.transcript = openai.Audio.transcribe("whisper-1", audio_file, language = 'hr', prompt= 'This is a transcript of a contact center call between agent and a customer. Transcribe it as a dialogue and show who said what.')['text']
                     summary_prompt = PromptTemplate(
                         input_variables=['input'],
                         template='''
