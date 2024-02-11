@@ -215,7 +215,7 @@ def main():
                     st.session_state.transcript_summary = summary_chain.run(input=st.session_state.transcript)
 
                     # Summarize Transcripts
-                    insert_into_transcripts(file_name=(st.session_state.audio_file_path.split("\\")[1]),
+                    insert_into_transcripts(file_name=(st.session_state.audio_file_path.split("\\")[0]),
                                             transcription=st.session_state.transcript,
                                             transcription_summary=st.session_state.transcript_summary,
                                             user_id=st.session_state.user_id)
@@ -223,10 +223,10 @@ def main():
 
             if st.session_state.audio_file_path:
                 if st.session_state.transcript:
-                    st.write(st.session_state.audio_file_path.split("\\")[1]+" ~ Transcription")
+                    st.write(st.session_state.audio_file_path.split("\\")[0]+" ~ Transcription")
                     st.markdown(bot_template.replace("{{MSG}}", st.session_state.transcript), unsafe_allow_html=True)
                 if st.session_state.transcript_summary:
-                    st.write(st.session_state.audio_file_path.split("\\")[1]+" ~ Summary")
+                    st.write(st.session_state.audio_file_path.split("\\")[0]+" ~ Summary")
                     st.markdown(bot_template.replace("{{MSG}}", st.session_state.transcript_summary), unsafe_allow_html=True)
                 
         with prev_tab:
