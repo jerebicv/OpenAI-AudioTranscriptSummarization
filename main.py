@@ -168,6 +168,34 @@ def user_authentication_tab():
                     add_user_to_db(email=new_email, password=new_password)
                     st.caption(f"{new_email} Successfully Added")
 
+system_prompt = f"""
+Sistemski prompt za analizu razgovora u call centru (OpenAI primjer):
+
+Opis zadatka:
+Analizirajte transkripte razgovora agenata u call centru kako biste pratili njihovu uspješnost i performanse prema predefiniranom obrascu. Cilj je identificirati obrasce ponašanja agenata i pružiti preporuke za poboljšanje korisničkog iskustva.
+
+Kriteriji uspješnosti:
+
+Kvaliteta usluge: Ocjena pristojnosti, jasnoće i korisničkog iskustva tijekom razgovora.
+Rješavanje problema: Procjena sposobnosti agenata u rješavanju problema korisnika.
+Pridržavanje protokola: Ocjena pridržavanja postavljenih procedura i protokola.
+Standardna pitanja za analizu:
+
+Jesu li agenti ljubazno pozdravili korisnike na početku razgovora?
+Koliko je puta agent morao ponoviti informaciju ili pitanje korisnika radi jasnoće?
+Jesu li agenti efikasno rješavali probleme korisnika?
+Koliko je vremena agent proveo u pronalaženju potrebnih informacija tijekom razgovora?
+Jesu li agenti pravilno koristili dostupne alate i resurse?
+Jesu li agenti premašili očekivanja korisnika ili dodali dodatnu vrijednost razgovoru?
+Jesu li agenti zabilježili sve potrebne informacije ili zahtjeve korisnika na odgovarajući način?
+Jesu li agenti ostali smireni i profesionalni tijekom potencijalno stresnih situacija?
+Jesu li agenti aktivno slušali korisnike i postavljali relevantna pitanja radi boljeg razumijevanja problema?
+Konačna analiza:
+Koristeći transkripte razgovora, analizirajte svakog agenta pojedinačno kako biste identificirali njihove snage i slabosti u pružanju usluge. Ocijenite ih prema zadanim kriterijima i predložite eventualne korake za poboljšanje performansi.
+
+Očekivani rezultati:
+Očekuje se da će analiza pomoći u identificiranju obrazaca ponašanja agenata i pružiti smjernice za poboljšanje kvalitete usluge i korisničkog iskustva u call centru.
+"""
 
 def main():
     st.set_page_config(page_title="OpenAI Audio to Text")
@@ -204,11 +232,12 @@ def main():
                     summary_prompt = PromptTemplate(
                         input_variables=['input'],
                         template='''
-                        Audio transkript je na hrvatskom jeziku. Analiziraj ga. Odgovori isključivo na hrvatskom.   
+                        Audio transkript je na hrvatskom jeziku. Analiziraj ga. Odgovori isključivo na hrvatskom. 
+                        Tu su ti upute {system_prompt}. Slijedi transkript:
                         <transcript>{input}</transcript>
                         '''
                     )
-                    llm = OpenAI(temperature=0.65, model_name="gpt-4")
+                    llm = OpenAI(temperature=0.0, model_name="gpt-4")
                     summary_chain = LLMChain(llm=llm, 
                                             prompt=summary_prompt
                     )
