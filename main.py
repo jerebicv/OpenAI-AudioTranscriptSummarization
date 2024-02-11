@@ -200,11 +200,11 @@ def main():
                         f.write(uploaded_file.getbuffer())
                     st.session_state.audio_file_path = file_path
                     with open(st.session_state.audio_file_path, 'rb') as audio_file:
-                        st.session_state.transcript = openai.Audio.transcribe("whisper-1", audio_file)['text']
+                        st.session_state.transcript = openai.Audio.transcribe("whisper-1", audio_file, language = 'hr')['text']
                     summary_prompt = PromptTemplate(
                         input_variables=['input'],
                         template='''
-                        Summarize this audio transcript: 
+                        Audio transkript je na hrvatskom jeziku. Analiziraj ga. Odgovori isključivo na hrvatskom.   
                         <transcript>{input}</transcript>
                         '''
                     )
