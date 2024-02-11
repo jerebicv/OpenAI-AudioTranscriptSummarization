@@ -69,15 +69,6 @@ def approve_password(password):
         return True
     return False
     
-
-def approve_email(email):
-    email_regex = '^[a-zA-Z0-9]+[\._]?[a-zA-Z0-9]+[@]\w+[.]\w{2,3}$'
-    if re.search(email_regex, email):
-        return True
-    else:
-        return False
-
-
 def create_transcripts_db():
     with sqlite3.connect('MASTER.db') as conn:
         conn.execute("""
@@ -230,7 +221,7 @@ def main():
                         f.write(uploaded_file.getbuffer())
                     st.session_state.audio_file_path = file_path
                     with open(st.session_state.audio_file_path, 'rb') as audio_file:
-                        st.session_state.transcript = openai.Audio.transcribe("whisper-1", audio_file, language = 'hr', prompt= 'This is a transcript of a contact center call between agent and a customer. Transcribe it as a dialogue and show who said what.')['text']
+                        st.session_state.transcript = openai.Audio.transcribe("whisper-1", audio_file, language = 'hr')['text']
                     summary_prompt = PromptTemplate(
                         input_variables=['input'],
                         template='''
