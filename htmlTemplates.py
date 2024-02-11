@@ -28,7 +28,7 @@ css = '''
 bot_template = '''
 <div class="chat-message bot">
     <div class="avatar">
-        <img src="https://www.sideshow.com/storage/product-images/2171/c-3po_star-wars_square.jpg">
+        <img src="https://www.raiffeisenbank.rs/wp-content/uploads/2019/05/fotka-2.jpg">
     </div>
     <div class="message">{{MSG}}</div>
 </div>
