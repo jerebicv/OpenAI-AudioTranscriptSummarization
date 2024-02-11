@@ -233,7 +233,7 @@ def main():
                         input_variables=['input'],
                         template='''
                         Audio transkript je na hrvatskom jeziku. Analiziraj ga. Odgovori isključivo na hrvatskom. 
-                        Tu su ti upute {system_prompt}. Slijedi transkript:
+                        Tu su ti upute ''' + system_prompt + '''. Slijedi transkript:
                         <transcript>{input}</transcript>
                         '''
                     )
