@@ -134,9 +134,9 @@ def get_summary_by_id(selection):
 
 def user_authentication_tab():
     if st.session_state.user_authenticated:
-        st.success("User Succesfully Authenticated")
+        st.success("Korisnik uspješno logiran")
     else:
-        with st.expander("User Authentication", expanded=True):
+        with st.expander("Autentifikacija", expanded=True):
             login_tab, create_account_tab = st.tabs(["Login", "Create Account"])
 
             with login_tab:
@@ -148,7 +148,7 @@ def user_authentication_tab():
                         st.session_state.user_id = get_user_id(email=email)
                         st.experimental_rerun()
                     else:
-                        st.caption('Incorrect Username or Password.')
+                        st.caption('Netočno ime ili šifra')
 
 
             with create_account_tab:
@@ -198,7 +198,7 @@ Očekuje se da će analiza pomoći u identificiranju obrazaca ponašanja agenata
 """
 
 def main():
-    st.set_page_config(page_title="OpenAI Audio to Text")
+    st.set_page_config(page_title="LLM - analiza razgovora agenta")
     create_users_db()
     create_transcripts_db()
     st.write(css, unsafe_allow_html=True)
@@ -209,17 +209,17 @@ def main():
     st.session_state.setdefault("prev_transcript", None)
     st.session_state.setdefault("user_id", None)
     st.session_state.setdefault("user_authenticated", False)
-    st.title("OpenAI Audio to Text")
+    st.title("LLM - analiza razgovora agenta")
     user_authentication_tab()
 
     if st.session_state.user_authenticated:
-        create_tab, prev_tab = st.tabs(["Create Transcription","Previous Transctiptions"])
+        create_tab, prev_tab = st.tabs(["Analiziraj razgovor","Prethodne analize"])
 
         with create_tab:
-            uploaded_file = st.file_uploader("Upload Audio File", type=['mp3', 'mp4', 'mpeg', 'mpga', 
+            uploaded_file = st.file_uploader("Učitaj snimku", type=['mp3', 'mp4', 'mpeg', 'mpga', 
                                                                         'm4a', 'wav', 'webm'])
 
-            if st.button("Generate Transcript") and uploaded_file:
+            if st.button("Generiraj transkript") and uploaded_file:
                 with st.spinner('Processing...'):
                     upload_dir = 'uploads'
                     os.makedirs(upload_dir, exist_ok=True)
