@@ -147,9 +147,6 @@ def user_authentication_tab():
                 new_password = st.text_input("New Password:", type='password')
                 confirm_password = st.text_input("Confirm Password:", type='password')
                 if st.button("Create Account"):
-                    if not approve_email(new_email):
-                        st.caption("Invalid Email")
-                        return
                     if not approve_password(new_password):
                         st.caption("Invalid Password")
                         return
